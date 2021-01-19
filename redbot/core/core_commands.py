@@ -45,7 +45,7 @@ from .utils.chat_formatting import (
     inline,
     pagify,
 )
-from .commands.requires import PrivilegeLevel
+from .commands.requires import PrivilegeLevel, is_owner
 
 
 _entities = {
@@ -423,17 +423,18 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
 
             embed = discord.Embed(color=(await ctx.embed_colour()))
             embed.add_field(name=_("Instance owned by"), value=str(owner))
-            embed.add_field(name="Python", value=python_version)
-            embed.add_field(name="discord.py", value=dpy_version)
-            embed.add_field(name=_("Red version"), value=red_version)
-            if outdated in (True, None):
-                if outdated is True:
-                    outdated_value = _("Yes, {version} is available.").format(
-                        version=str(pypi_version)
-                    )
-                else:
-                    outdated_value = _("Checking for updates failed.")
-                embed.add_field(name=_("Outdated"), value=outdated_value)
+            if await ctx.bot.is_owner(ctx.author):
+                embed.add_field(name="Python", value=python_version)
+                embed.add_field(name="discord.py", value=dpy_version)
+                embed.add_field(name=_("Red version"), value=red_version)
+                if outdated in (True, None):
+                    if outdated is True:
+                        outdated_value = _("Yes, {version} is available.").format(
+                            version=str(pypi_version)
+                        )
+                    else:
+                        outdated_value = _("Checking for updates failed.")
+                    embed.add_field(name=_("Outdated"), value=outdated_value)
             if custom_info:
                 embed.add_field(name=_("About this instance"), value=custom_info, inline=False)
             embed.add_field(name=_("About Red"), value=about, inline=False)
@@ -456,28 +457,33 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
                 "(c) Cog Creators"
             )
             about = box(about)
+            if await ctx.bot.is_owner(ctx.author):
+                extras = _(
+                    "Instance owned by: [{owner}]\n"
+                    "Python:            [{python_version}] (5)\n"
+                    "discord.py:        [{dpy_version}] (6)\n"
+                    "Red version:       [{red_version}] (7)\n"
+                ).format(
+                    owner=owner,
+                    python_version=python_version,
+                    dpy_version=dpy_version,
+                    red_version=red_version,
+                )
 
-            extras = _(
-                "Instance owned by: [{owner}]\n"
-                "Python:            [{python_version}] (5)\n"
-                "discord.py:        [{dpy_version}] (6)\n"
-                "Red version:       [{red_version}] (7)\n"
-            ).format(
-                owner=owner,
-                python_version=python_version,
-                dpy_version=dpy_version,
-                red_version=red_version,
-            )
-
-            if outdated in (True, None):
-                if outdated is True:
-                    outdated_value = _("Yes, {version} is available.").format(
-                        version=str(pypi_version)
-                    )
-                else:
-                    outdated_value = _("Checking for updates failed.")
-                extras += _("Outdated:          [{state}]\n").format(state=outdated_value)
-
+                if outdated in (True, None):
+                    if outdated is True:
+                        outdated_value = _("Yes, {version} is available.").format(
+                            version=str(pypi_version)
+                        )
+                    else:
+                        outdated_value = _("Checking for updates failed.")
+                    extras += _("Outdated:          [{state}]\n").format(state=outdated_value)
+            else:
+                extras = _(
+                    "Instance owned by: [{owner}]\n"
+                ).format(
+                    owner=owner,
+                )
             red = (
                 _("**About Red**\n")
                 + about

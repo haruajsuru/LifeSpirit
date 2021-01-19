@@ -25,7 +25,7 @@ _ = Translator("Audio", Path(__file__))
 
 
 class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
-    @commands.command(name="disconnect")
+    @commands.command(name="disconnect", aliases=["dc"])
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_disconnect(self, ctx: commands.Context):
@@ -668,7 +668,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
                 description=_("Connection to Lavalink has not yet been established."),
             )
 
-    @commands.command(name="volume")
+    @commands.command(name="volume", aliases=["vol"])
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_volume(self, ctx: commands.Context, vol: int = None):
@@ -715,7 +715,7 @@ class PlayerControllerCommands(MixinMeta, metaclass=CompositeMetaClass):
             embed.set_footer(text=_("Nothing playing."))
         await self.send_embed_msg(ctx, embed=embed)
 
-    @commands.command(name="repeat")
+    @commands.command(name="repeat", aliases=["loop"])
     @commands.guild_only()
     @commands.bot_has_permissions(embed_links=True)
     async def command_repeat(self, ctx: commands.Context):

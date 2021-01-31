@@ -1657,7 +1657,7 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
         """
         if not description:
             await ctx.bot._config.description.clear()
-            ctx.bot.description = "Red V3"
+            ctx.bot.description = "Life Spirit"
             await ctx.send(_("Description reset."))
         elif len(description) > 250:  # While the limit is 256, we bold it adding characters.
             await ctx.send(

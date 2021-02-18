@@ -1552,6 +1552,7 @@ class Core(commands.commands._RuleDropper, commands.Cog, CoreLogic):
         await ctx.bot.shutdown(restart=True)
 
     @commands.group(name="set")
+    @checks.mod_or_permissions(manage_roles=True)
     async def _set(self, ctx: commands.Context):
         """Changes [botname]'s settings."""
 

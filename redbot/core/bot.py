@@ -1293,7 +1293,7 @@ class RedBase(
 
     @staticmethod
     def list_packages():
-        """Lists packages present in the cogs the folder"""
+        """Lists packages present in the cogs folder"""
         return os.listdir("cogs")
 
     async def save_packages_status(self, packages):

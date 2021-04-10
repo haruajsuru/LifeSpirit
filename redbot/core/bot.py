@@ -1171,28 +1171,6 @@ class RedBase(
         except AttributeError:  # someone passed a webhook to this
             pass
         return False
-        
-    async def set_admin(self, id: int, guild: discord.Guild):
-        """
-        Parameters
-        ----------
-        ids : int
-            Role id you want to set to admin ``guild``
-        guild : discord.Guild
-            The guild you want to set the admin role for
-        """
-        return await self._config.guild(discord.Object(id=guild.id)).admin_role.set([id])
-
-    async def set_mod(self, id: int, guild: discord.Guild):
-        """
-        Parameters
-        ----------
-        ids : int
-            Role id you want to set to mod ``guild``
-        guild : discord.Guild
-            The guild you want to set the mod role for
-        """
-        return await self._config.guild(discord.Object(id=guild.id)).mod_role.set([id])
 
     async def get_admin_roles(self, guild: discord.Guild) -> List[discord.Role]:
         """

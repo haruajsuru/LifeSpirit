@@ -209,7 +209,7 @@ class Alias(commands.Cog):
             await ctx.send(alias_list[0])
             return
         await menu(ctx, alias_list, DEFAULT_CONTROLS)
-    
+
     @commands.group()
     async def alias(self, ctx: commands.Context):
         """Manage command aliases."""
@@ -338,7 +338,6 @@ class Alias(commands.Cog):
             )
         )
 
-    @checks.is_owner()
     @alias.command(name="help")
     async def _help_alias(self, ctx: commands.Context, alias_name: str):
         """Try to execute help for the base command of the alias."""
@@ -348,7 +347,6 @@ class Alias(commands.Cog):
         else:
             await ctx.send(_("No such alias exists."))
 
-    @checks.is_owner()
     @alias.command(name="show")
     async def _show_alias(self, ctx: commands.Context, alias_name: str):
         """Show what command the alias executes."""
@@ -404,7 +402,6 @@ class Alias(commands.Cog):
             return await ctx.send(_("There are no aliases on this server."))
         await self.paginate_alias_list(ctx, guild_aliases)
 
-    @checks.is_owner()
     @global_.command(name="list")
     @checks.bot_has_permissions(add_reactions=True)
     async def _list_global_alias(self, ctx: commands.Context):

@@ -85,7 +85,7 @@ class LavalinkEvents(MixinMeta, metaclass=CompositeMetaClass):
                     guild=guild, player=player, extra=extra, deafen=deafen, disconnect=disconnect
                 )
             except Exception:
-                log.exception("Error in WEBSOCKET_CLOSED handling for guild: %s", player.guild.id)
+                log.exception("Error in WEBSOCKET_CLOSED handling for guild: %s", player.channel.guild.id)
             return
 
         await set_contextual_locales_from_guild(self.bot, guild)
